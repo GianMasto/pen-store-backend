@@ -1,13 +1,9 @@
-const JSONfile = require('../classes/JSONfile')
-
-const productsJSON = new JSONfile('products.json')
-const cartJSON = new JSONfile('cart.json')
-
+const dbCarts = require('../factories/dbCarts.factories')
 
 const getCartProduct = async (req, res) => {
   try {
     const cartProductId = req.params.id
-    const response = await cartJSON.getObject(cartProductId)
+    const response = await dbCarts.findByValue(cartProductId)
     res.json(response)
   } catch({message}) {
     res.status(400).json({error: message})
@@ -16,7 +12,7 @@ const getCartProduct = async (req, res) => {
 
 const getCartProducts = async (req, res) => {
   try {
-    const response = await cartJSON.getObjects()
+    const response = await dbCarts.findAll()
     res.json(response)
   } catch({message}) {
     res.status(400).json({error: message})
@@ -27,10 +23,7 @@ const addCartProduct = async (req, res) => {
   try {
     const productId = req.params.product_id
 
-    const product = await productsJSON.getObject(productId)
-    const response = await cartJSON.addObject({
-      producto: product
-    })
+    const response = await dbCarts.add(productId)
 
     res.json(response)
   } catch ({message}) {
@@ -42,7 +35,7 @@ const deleteCartProduct = async (req, res) => {
   try {
     const cartId = req.params.id
 
-    const response = await cartJSON.deleteObject(cartId)
+    const response = await dbCarts.deleteById(cartId)
     res.json(response)
   } catch ({message}) {
     res.status(400).json({error: message})

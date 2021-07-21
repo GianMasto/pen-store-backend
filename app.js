@@ -2,7 +2,12 @@ const express = require('express')
 
 const productsRouter = require('./routes/products.routes')
 const cartRouter = require('./routes/cart.routes')
-const JSONfile = require('./classes/JSONfile')
+
+const dbProducts = require('./factories/dbProducts.factories')
+const dbCarts = require('./factories/dbCarts.factories')
+
+dbProducts.init()
+dbCarts.init()
 
 
 const app = express()
@@ -14,7 +19,8 @@ app.use(express.urlencoded({
 }))
 
 app.use('/productos', productsRouter)
-app.use('/carrito', cartRouter)
+app.use('/carrito', cartRouter);
+
 
 const server = app.listen(port, () => {
   console.log(`Servidor corriendo en puerto:${port}`)

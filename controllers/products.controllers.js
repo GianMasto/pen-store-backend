@@ -1,11 +1,10 @@
-const JSONfile = require('../classes/JSONfile')
+const dbProducts = require('../factories/dbProducts.factories')
 
-const productsJSON = new JSONfile('products.json')
 
 const getProduct = async (req, res) => {
   try {
     const productId = req.params.id
-    const response = await productsJSON.getObject(productId)
+    const response = await dbProducts.findByValue('id', productId)
     res.json(response)
   } catch({message}) {
     res.status(400).json({error: message})
@@ -14,7 +13,7 @@ const getProduct = async (req, res) => {
 
 const getProducts = async (req, res) => {
   try {
-    const response = await productsJSON.getObjects()
+    const response = await dbProducts.findAll()
     res.json(response)
   } catch({message}) {
     res.status(400).json({error: message})
@@ -24,7 +23,7 @@ const getProducts = async (req, res) => {
 const addProduct = async (req, res) => {
   try {
     const product = req.body
-    const response = await productsJSON.addObject(product)
+    const response = await dbProducts.add(product)
 
     res.json(response)
   } catch ({message}) {
@@ -37,7 +36,7 @@ const updateProduct = async (req, res) => {
     const productId = req.params.id
     const updatedProduct = req.body
 
-    const response = await productsJSON.updateObject(productId, updatedProduct)
+    const response = await dbProducts.updateById(productId, updatedProduct)
     res.json(response)
   } catch ({message}) {
     res.status(400).json({error: message})
@@ -48,7 +47,7 @@ const deleteProduct = async (req, res) => {
   try {
     const productId = req.params.id
 
-    const response = await productsJSON.deleteObject(productId)
+    const response = await dbProducts.deleteById(productId)
     res.json(response)
   } catch ({message}) {
     res.status(400).json({error: message})

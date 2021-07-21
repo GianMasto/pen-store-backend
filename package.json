@@ -6,7 +6,6 @@
   "scripts": {
     "watch": "nodemon app.js",
     "start": "node app.js"
-
   },
   "repository": {
     "type": "git",
@@ -20,7 +19,10 @@
   },
   "homepage": "https://github.com/GianMasto/pen-store-backend#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "knex": "^0.95.7",
+    "mongoose": "^5.13.3",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
